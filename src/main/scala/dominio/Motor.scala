@@ -16,6 +16,7 @@ case class Linea(x:Int, y: Int, otroX: Double, otroY: Double)
   extends Figura
 
 object Motor {
+  var figuras: List[Figura] = List()
 
   def trasladar[T <: Figura](x: Int, y: Int) (figura: T) :T = {
     val result = figura match {
@@ -59,9 +60,20 @@ object Motor {
 
   def doble[T <: Figura] (f: T => T): T => T = f compose f
 
+  def agregarFigura(figura: Figura) = {
+    val motor = Motor
+    motor.figuras = figura :: figuras
+    motor
+  }
+
 
 
 }
+
+//case class Motor() {
+
+
+//}
 
 
 
