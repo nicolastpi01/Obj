@@ -3,7 +3,16 @@ package pruebas
 
 import org.scalatest.FlatSpec
 
-class FuncionesUtilesTest extends FlatSpec{
+class FuncionesUtilesTest extends FlatSpec {
+
+  "Un Motor" should "moverOrigen un circulo" in {
+
+    val moverOrigen = Motor.moverOrigen[Circulo]_
+    val circulo :Circulo = moverOrigen(Circulo(1,1,50))
+
+    assert(circulo.x === 0)
+    assert(circulo.y === 0)
+  }
 
   "Un Motor" should "moverX un circulo" in {
 

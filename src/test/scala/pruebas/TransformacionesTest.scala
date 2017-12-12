@@ -98,6 +98,4 @@ class TransformacionesTest extends FlatSpec{
   }
 
 
-
-
 }

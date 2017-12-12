@@ -47,6 +47,8 @@ object Motor {
 
   def moverX[T <: Figura](x :Int) (figura: T) :T = mover(x, figura.y) (figura)
 
+  def moverOrigen[T <: Figura](figura: T) :T = mover(0,0) (figura)
+
   def moverY[T <: Figura](y :Int) (figura: T) :T = mover(figura.x, y) (figura)
 
   def trasladarXeY[T <: Figura](n :Int) (figura: T) :T = trasladar(n,n) (figura)
@@ -54,6 +56,8 @@ object Motor {
   def duplicar[T <: Figura] (figura: T) :T = escalar(2) (figura)
 
   def cuadruplicar[T <: Figura] (figura: T) :T = duplicar(duplicar (figura))
+
+  def doble[T <: Figura] (f: T => T): T => T = f compose f
 
 
 
