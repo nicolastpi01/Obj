@@ -3,7 +3,7 @@ package pruebas
 
 import org.scalatest.FlatSpec
 
-class Test extends FlatSpec{
+class TransformacionesTest extends FlatSpec{
   // TRASLADAR
 
   "Un Motor" should "trasladar un Circulo" in {
@@ -97,24 +97,7 @@ class Test extends FlatSpec{
     assert(linea.otroY === 0)
   }
 
-  "Un Motor" should "moverX un circulo" in {
 
-    val moverXfunction = Motor.moverX[Circulo](5)_
-    val circulo :Circulo = moverXfunction(Circulo(1,1,50))
-
-    assert(circulo.x === 5)
-    assert(circulo.y === 1)
-    assert(circulo.radio === 50)
-  }
-
-  "Un Motor" should "moverY un rectangulo" in {
-
-    val moverYfunction = Motor.moverY[Rectangulo](3)_
-    val rectangulo :Rectangulo = moverYfunction(Rectangulo(1,10,4,6))
-
-    assert(rectangulo.x === 1)
-    assert(rectangulo.y === 3)
-  }
 
 
 }
