@@ -15,7 +15,7 @@ case class Rectangulo(x:Int, y: Int, ancho: Double, alto: Double)
 case class Linea(x:Int, y: Int, otroX: Double, otroY: Double)
   extends Figura
 
-object Motor {
+case class Motor() {
   var figuras: List[Figura] = List()
 
   def trasladar[T <: Figura](x: Int, y: Int) (figura: T) :T = {
@@ -60,15 +60,23 @@ object Motor {
 
   def doble[T <: Figura] (f: T => T): T => T = f compose f
 
-  def agregarFigura(figura: Figura) = {
-    val motor = Motor
-    motor.figuras = figura :: figuras
+  def agregarFigura(figura: Figura) : Motor= {
+    val motor = new Motor
+    motor.figuras = figura :: Motor.figuras
     motor
   }
 
 
 
 }
+
+object Motor extends Motor {
+  //override var figuras = List()
+}
+
+//object Motor extends Motor {
+//}
+
 
 //case class Motor() {
 
