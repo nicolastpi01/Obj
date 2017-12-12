@@ -96,4 +96,16 @@ class Test extends FlatSpec{
     assert(linea.otroX === 10)
     assert(linea.otroY === 0)
   }
+
+  "Un Motor" should "moverX un circulo" in {
+
+    val moverXfunction = Motor.moverX[Circulo](5)_
+    val circulo :Circulo = moverXfunction(Circulo(1,1,50))
+
+    assert(circulo.x === 5)
+    assert(circulo.y === 1)
+    assert(circulo.radio === 50)
+  }
+
+
 }

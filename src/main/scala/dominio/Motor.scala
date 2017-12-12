@@ -1,5 +1,6 @@
 package dominio
 
+
 trait Figura {
   def x:Int
   def y:Int
@@ -43,6 +44,9 @@ object Motor {
     }
     result.asInstanceOf[T]
   }
+
+  def moverX[T <: Figura](x :Int) (figura: T) :T = mover(x, figura.y) (figura)
+
 }
 
 
