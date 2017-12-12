@@ -17,11 +17,11 @@ class Test extends FlatSpec{
 
   "Un Motor" should "trasladar una linea" in {
     val trasladar = Motor.trasladar[Linea](2, 2)_
-    val linea = trasladar(Linea(1,1,5,1))
+    val linea = trasladar(Linea(1,1,0,3))
 
     assert(linea.x === 3)
     assert(linea.y === 3)
-    assert(linea.otroX === 7)
+    assert(linea.otroX === 0)
     assert(linea.otroY === 3)
   }
 
@@ -61,12 +61,12 @@ class Test extends FlatSpec{
 
   "Un Motor" should "mover una linea" in {
     val mover = Motor.mover[Linea](2, 2)_
-    val linea = mover(Linea(1,1,5,1))
+    val linea = mover(Linea(1,1,-5,0))
 
     assert(linea.x === 2)
     assert(linea.y === 2)
-    assert(linea.otroX === 5)
-    assert(linea.otroY === 2)
+    assert(linea.otroX === -5)
+    assert(linea.otroY === 0)
   }
 
   // Escalar n
@@ -78,22 +78,22 @@ class Test extends FlatSpec{
     assert(rectangulo.alto === 12)
     assert(rectangulo.ancho === 8)
   }
-  /*
-            "Un Motor" should "escalar un Circulo" in {
 
-              val Fescalar = Motor.escalar(0.5)
-              val circulo = Fescalar(Circulo(1,1,50))
+  "Un Motor" should "escalar un Circulo" in {
 
-              //assert(circulo.radio === 25)
-            }
+    val escalar = Motor.escalar[Circulo](0.5)_
+    val circulo :Circulo = escalar(Circulo(1,1,50))
 
-              "Un Motor" should "escalar una Linea" in {
+    assert(circulo.radio === 25)
+  }
 
-                val Fmover = Motor.mover(1, 5)
-                val linea = Fmover(Linea(1,1,5,0))
 
-                //assert(linea.x === 1)
-                //assert(linea.y === 5)
-              }
-            */
+  "Un Motor" should "escalar una Linea" in {
+
+    val escalar = Motor.escalar[Linea](2)_
+    val linea = escalar(Linea(1,1,5,0))
+
+    assert(linea.otroX === 10)
+    assert(linea.otroY === 0)
+  }
 }

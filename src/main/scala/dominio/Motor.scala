@@ -11,7 +11,7 @@ case class Circulo(x:Int, y: Int, radio: Double)
 case class Rectangulo(x:Int, y: Int, ancho: Double, alto: Double)
   extends Figura
 
-case class Linea(x:Int, y: Int, otroX: Int, otroY: Int)
+case class Linea(x:Int, y: Int, otroX: Double, otroY: Double)
   extends Figura
 
 object Motor {
@@ -20,7 +20,7 @@ object Motor {
     val result = figura match {
       case Circulo(xPos, yPos, radio) => Circulo(xPos+x, yPos+y, radio)
       case Rectangulo(xPos, yPos, ancho, alto) => Rectangulo(xPos+x, yPos+y, ancho, alto)
-      case Linea(xPos, yPos, otroX, otroY) => Linea(xPos+x, yPos+y, otroX+x, otroY+y)
+      case Linea(xPos, yPos, otroX, otroY) => Linea(xPos+x, yPos+y, otroX, otroY)
     }
     result.asInstanceOf[T]
   }
@@ -39,7 +39,7 @@ object Motor {
     val result = figura match {
       case Circulo(xPos, yPos, radio) => Circulo(xPos, yPos, n*radio)
       case Rectangulo(xPos, yPos, ancho, alto) => Rectangulo(xPos, yPos, ancho*n, alto*n)
-      //case Linea(xPos, yPos, ancho, alto) => Linea(x, y, ancho, alto)
+      case Linea(xPos, yPos, otroX, otroY) => Linea(xPos, yPos, otroX*n, otroY*n)
     }
     result.asInstanceOf[T]
   }
