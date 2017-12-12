@@ -107,5 +107,14 @@ class Test extends FlatSpec{
     assert(circulo.radio === 50)
   }
 
+  "Un Motor" should "moverY un rectangulo" in {
+
+    val moverYfunction = Motor.moverY[Rectangulo](3)_
+    val rectangulo :Rectangulo = moverYfunction(Rectangulo(1,10,4,6))
+
+    assert(rectangulo.x === 1)
+    assert(rectangulo.y === 3)
+  }
+
 
 }

@@ -47,6 +47,8 @@ object Motor {
 
   def moverX[T <: Figura](x :Int) (figura: T) :T = mover(x, figura.y) (figura)
 
+  def moverY[T <: Figura](y :Int) (figura: T) :T = mover(figura.x, y) (figura)
+
 }
 
 
