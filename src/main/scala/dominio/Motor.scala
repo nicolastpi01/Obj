@@ -16,6 +16,8 @@ case class Linea(x:Int, y: Int, otroX: Double, otroY: Double)
   extends Figura
 
 case class Motor() {
+  var motorAnterior :Option[Motor] = None
+
   var figuras: List[Figura] = List()
 
   def trasladar[T <: Figura](x: Int, y: Int) (figura: T) :T = {
@@ -60,28 +62,48 @@ case class Motor() {
 
   def doble[T <: Figura] (f: T => T): T => T = f compose f
 
-  def agregarFigura(figura: Figura) : Motor= {
+  def create : Motor = {
     val motor = new Motor
-    motor.figuras = figura :: Motor.figuras
+    motor.motorAnterior = Some(this)
     motor
+  }
+
+  def agregarFigura(figura: Figura) : Motor= {
+    val motor = create
+    motor.figuras = figura :: figuras
+    motor
+  }
+
+  def getFiguras:List[Figura] = figuras
+
+  def getEstadoAnterior :List[Figura] = {
+    motorAnterior match {
+      case Some(motor) => motor.figuras
+      case None => List()
+    }
+  }
+
+  def transformar(f : Figura => Figura) :Motor = {
+    val figurasTransformadas : List[Figura] = transformarFiguras(f, this.figuras)
+    val motor : Motor = create
+    motor.figuras = figurasTransformadas
+    motor
+  }
+
+  def transformarFiguras(f: Figura => Figura, figuras: List[Figura]) : List[Figura] = {
+    figuras match {
+      case Nil => List()
+      case cabeza :: cola => f(cabeza) :: transformarFiguras(f, cola)
+    }
   }
 
 
 
 }
 
-object Motor extends Motor {
-  //override var figuras = List()
-}
-
-//object Motor extends Motor {
-//}
+object Motor extends Motor
 
 
-//case class Motor() {
-
-
-//}
 
 
 
