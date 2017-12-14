@@ -29,21 +29,88 @@ class MotorTest extends FlatSpec{
 
   }
 
+  // No funciona !!!!!!!!!!!!!
   "Un Motor" should "aplicar la transformación de trasladar a sus figuras" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
     val otroMotor : Motor = motor.agregarFigura(rectangulo)
-    val otroMotorMas : Motor = motor.transformar(otroMotor.trasladar(2,2))
+    val otroMotorMas : Motor = otroMotor.transformar(otroMotor.trasladar(2,2))
 
-    //assert(otroMotor.getFiguras.size === 2)
-    //assert(otroMotor.getFiguras.head === rectangulo)
-    //assert(otroMotor.getFiguras.tail.head === circulo)
+    val rectanguloTrasladado = otroMotor.getFiguras.head
+    assert(rectanguloTrasladado.x === 7)
+    assert(rectanguloTrasladado.y === 7)
+    val circuloTrasladado = otroMotor.getFiguras.tail.head
+    assert(circuloTrasladado.x === 3)
+    assert(circuloTrasladado.y === 3)
     assert(motor.getFiguras.size === 1)
     assert(otroMotor.getFiguras.size === 2)
     assert(otroMotorMas.getFiguras.size === 2)
-    //assert(otroMotorMas.figuras.size === 2)
 
+  }
+
+  "Un Motor" should "devolver el estado anterior" in {
+    val circulo = Circulo(1,1,50)
+    val rectangulo = Rectangulo(5,5,2,2)
+    val motor : Motor = Motor.agregarFigura(circulo)
+    val estadoAnterior : List[Figura] = motor.getEstadoAnterior
+    assert(estadoAnterior.size === 0)
+    val otroMotor : Motor = motor.agregarFigura(rectangulo)
+    val nuevoEstadoAnterior : List[Figura] = otroMotor.getEstadoAnterior
+    assert(nuevoEstadoAnterior.size === 1)
+    assert(nuevoEstadoAnterior.head === circulo)
+
+  }
+
+  "Un Motor" should "devolver todos los estados" in {
+    val circulo = Circulo(1,1,50)
+    val rectangulo = Rectangulo(5,5,2,2)
+    val motor : Motor = Motor.agregarFigura(circulo)
+    val otroMotor : Motor = motor.agregarFigura(rectangulo)
+    val estados = otroMotor.getEstados
+    assert(estados.size === 2)
+    assert(estados.head.head === circulo)
+    assert(estados.tail.head.head === rectangulo)
+
+  }
+
+
+  "Un Motor" should "poderse rollbackear una vez" in {
+    val rectangulo = Rectangulo(5,5,2,2)
+    val motor : Motor = Motor.agregarFigura(rectangulo)
+    val motorRollback : Motor = motor.rollback(1)
+    assert(motorRollback.figuras.size === 0)
+    assert(motorRollback.motorAnterior === None)
+  }
+
+  "Un Motor" should "poderse rollbackear dos veces" in {
+    val rectangulo = Rectangulo(5,5,2,2)
+    val circulo = Circulo(1,1,50)
+    val motor : Motor = Motor.agregarFigura(rectangulo)
+    val otroMotor : Motor = motor.agregarFigura(circulo)
+    val motorRollback : Motor = otroMotor.rollback(2)
+    assert(motorRollback.figuras.size === 0)
+    assert(motorRollback.motorAnterior === None)
+  }
+
+  // ERRORRORRORRORRORO
+  "Un Motor" should "poderse rollbackear una vez y aún tener figuras" in {
+    val rectangulo = Rectangulo(5,5,2,2)
+    val circulo = Circulo(1,1,50)
+    val motor : Motor = Motor.agregarFigura(rectangulo)
+    val otroMotor : Motor = motor.agregarFigura(circulo)
+    val motorRollback : Motor = otroMotor.rollback(1)
+    println(motorRollback.figuras)
+    assert(motorRollback.figuras.size === 1)
+    assert(motorRollback.motorAnterior === None)
+  }
+
+  // NO FUNCIONA [Hay que arreglar la excepción]
+  "Un Motor" should "no deberia poder rollbackearse si no tiene un estado anterior" in {
+    val rectangulo = Rectangulo(5,5,2,2)
+    val motorRollback : Motor = Motor.rollback(1)
+    //assert(motorRollback.figuras.size === 0)
+    //assert(motorRollback.motorAnterior === None)
   }
 
 }

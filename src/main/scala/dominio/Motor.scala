@@ -62,19 +62,23 @@ case class Motor() {
 
   def doble[T <: Figura] (f: T => T): T => T = f compose f
 
+
+
+                        // METODOS DE MOTOR
+
   def create : Motor = {
     val motor = new Motor
     motor.motorAnterior = Some(this)
     motor
   }
 
-  def agregarFigura(figura: Figura) : Motor= {
+  def agregarFigura(figura: Figura) : Motor = {
     val motor = create
     motor.figuras = figura :: figuras
     motor
   }
 
-  def getFiguras:List[Figura] = figuras
+  def getFiguras: List[Figura] = figuras
 
   def getEstadoAnterior :List[Figura] = {
     motorAnterior match {
@@ -83,6 +87,7 @@ case class Motor() {
     }
   }
 
+  // No funciona
   def transformar(f : Figura => Figura) :Motor = {
     val figurasTransformadas : List[Figura] = transformarFiguras(f, this.figuras)
     val motor : Motor = create
@@ -90,6 +95,7 @@ case class Motor() {
     motor
   }
 
+  // temporal
   def transformarFiguras(f: Figura => Figura, figuras: List[Figura]) : List[Figura] = {
     figuras match {
       case Nil => List()
@@ -97,6 +103,28 @@ case class Motor() {
     }
   }
 
+  def getEstados : List[List[Figura]] = {
+    var figurasRet = List(figuras)
+    var motorAntiguo : Option[Motor] = motorAnterior
+    while (motorAntiguo.isDefined) {
+      if (motorAntiguo.get.figuras.nonEmpty) {
+        figurasRet = motorAntiguo.get.figuras :: figurasRet
+      }
+      motorAntiguo = motorAntiguo.get.motorAnterior
+    }
+    figurasRet
+  }
+
+  // Si n excede la cant. de estados del motor entonces retorna el último estado definido
+  def rollback(n : Int) : Motor = {
+    if(motorAnterior.isEmpty) throw new IllegalArgumentException("arg 1 was wrong...")
+    var motorAnt : Option[Motor] = motorAnterior
+    for (i <- 1 to n) {
+      if(motorAnt.get.motorAnterior.isDefined)
+        motorAnt = motorAnt.get.motorAnterior
+    }
+    motorAnt.get
+  }
 
 
 }
