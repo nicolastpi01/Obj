@@ -2,6 +2,7 @@
 package dominio
 package pruebas
 
+import exceptions.NoRollbackException
 import org.scalatest.FlatSpec
 
 class MotorTest extends FlatSpec{
@@ -76,6 +77,14 @@ class MotorTest extends FlatSpec{
 
   }
 
+  "Un Motor" should "poderse rollbackear" in {
+    val rectangulo = Rectangulo(5,5,2,2)
+    val motor : Motor = Motor.agregarFigura(rectangulo)
+    val motorRollback : Motor = motor.rollback()
+    assert(motorRollback.figuras.size === 0)
+    assert(motorRollback.motorAnterior === None)
+  }
+
 
   "Un Motor" should "poderse rollbackear una vez" in {
     val rectangulo = Rectangulo(5,5,2,2)
@@ -106,13 +115,10 @@ class MotorTest extends FlatSpec{
     assert(motorRollback.figuras.head === rectangulo)
   }
 
-  /*
-  // NO FUNCIONA [Hay que arreglar la excepción]
+
   "Un Motor" should "no deberia poder rollbackearse si no tiene un estado anterior" in {
     val rectangulo = Rectangulo(5,5,2,2)
-    val motorRollback : Motor = Motor.rollback(1)
-    //assert(motorRollback.figuras.size === 0)
-    //assert(motorRollback.motorAnterior === None)
+    assertThrows[NoRollbackException](Motor.rollback(1))
   }
-  */
+
 }

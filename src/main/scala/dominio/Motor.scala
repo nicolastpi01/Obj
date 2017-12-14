@@ -1,5 +1,7 @@
 package dominio
 
+import exceptions.NoRollbackException
+
 
 trait Figura {
   def x:Int
@@ -116,8 +118,9 @@ case class Motor() {
   }
 
   // Si n excede la cant. de estados del motor entonces retorna el último estado definido
-  def rollback(n : Int) : Motor = {
-    if(motorAnterior.isEmpty) throw new IllegalArgumentException("arg 1 was wrong...")
+  // Si n es negativo, 1 o 0 el efecto es el mismo
+  def rollback(n : Int = 0) : Motor = {
+    if(motorAnterior.isEmpty) throw new NoRollbackException("no se puede rollbackear si no hay un motor previo")
     var motorAnt : Option[Motor] = motorAnterior
     for (i <- 2 to n) {
       if(motorAnt.get.motorAnterior.isDefined)
@@ -130,6 +133,7 @@ case class Motor() {
 }
 
 object Motor extends Motor
+
 
 
 
