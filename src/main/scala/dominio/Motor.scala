@@ -16,8 +16,11 @@ case class Rectangulo(x:Int, y: Int, ancho: Double, alto: Double)
 case class Linea(x:Int, y: Int, otroX: Double, otroY: Double)
   extends Figura
 
+object Motor extends Motor
+
 case class Motor() {
   var motorAnterior :Option[Motor] = None
+
 
   var figuras: List[Figura] = List()
 
@@ -88,7 +91,7 @@ case class Motor() {
     }
   }
 
-  // No funciona
+
   def transformar(f : Figura => Figura) :Motor = {
     val figurasTransformadas : List[Figura] = transformarFiguras(f, this.figuras)
     val motor : Motor = create
@@ -96,8 +99,7 @@ case class Motor() {
     motor
   }
 
-  // temporal
-  def transformarFiguras(f: Figura => Figura, figuras: List[Figura]) : List[Figura] = {
+  private def transformarFiguras(f: Figura => Figura, figuras: List[Figura]) : List[Figura] = {
     figuras match {
       case Nil => List()
       case cabeza :: cola => f(cabeza) :: transformarFiguras(f, cola)
@@ -116,7 +118,7 @@ case class Motor() {
     figurasRet
   }
 
-  // Si n es negativo, 1 o 0 el efecto es el mismo
+  // Si n es negativo, 1 v 0 el efecto es el mismo
   def rollback(n : Int = 0) : Motor = {
     if(motorAnterior.isEmpty) throw NoRollbackException("no se puede rollbackear si no hay un motor previo")
     var motorAnt : Option[Motor] = motorAnterior
@@ -130,9 +132,12 @@ case class Motor() {
   }
 
 
+
+
+
 }
 
-object Motor extends Motor
+
 
 
 

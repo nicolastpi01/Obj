@@ -30,27 +30,51 @@ class MotorTest extends FlatSpec{
 
   }
 
-  /*
-  // No funciona !!!!!!!!!!!!!
+
   "Un Motor" should "aplicar la transformación de trasladar a sus figuras" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
     val otroMotor : Motor = motor.agregarFigura(rectangulo)
-    val otroMotorMas : Motor = otroMotor.transformar(otroMotor.mover(2,2))
-    print(otroMotor.figuras)
-    val rectanguloTrasladado :Rectangulo = otroMotor.figuras.head.asInstanceOf[Rectangulo]
-    assert(rectanguloTrasladado.x === 2)
-    assert(rectanguloTrasladado.y === 2)
-    //val circuloTrasladado = otroMotor.getFiguras.tail.head.asInstanceOf[Circulo]
-    //assert(circuloTrasladado.x === 3)
-    //assert(circuloTrasladado.y === 3)
-    //assert(motor.getFiguras.size === 1)
-    //assert(otroMotor.getFiguras.size === 2)
-    //assert(otroMotorMas.getFiguras.size === 2)
-
+    val otroMotorMas : Motor = otroMotor.transformar(otroMotor.trasladar(2,2)(_:Figura))
+    val rectanguloTrasladado :Rectangulo = otroMotorMas.figuras.head.asInstanceOf[Rectangulo]
+    assert(rectanguloTrasladado.x === 7)
+    assert(rectanguloTrasladado.y === 7)
+    val circuloTrasladado = otroMotorMas.figuras.tail.head.asInstanceOf[Circulo]
+    assert(circuloTrasladado.x === 3)
+    assert(circuloTrasladado.y === 3)
+    assert(otroMotorMas.getFiguras.size === 2)
   }
-  */
+
+  "Un Motor" should "aplicar la transformación de mover origen a sus figuras" in {
+    val circulo = Circulo(1,1,50)
+    val rectangulo = Rectangulo(5,5,2,2)
+    val motor : Motor = Motor.agregarFigura(circulo)
+    val otroMotor : Motor = motor.agregarFigura(rectangulo)
+    val motorMoveOrigen : Motor = otroMotor.transformar(otroMotor.moverOrigen)
+    val rectanguloTrasladado :Figura = motorMoveOrigen.figuras.head
+    assert(rectanguloTrasladado.x === 0)
+    assert(rectanguloTrasladado.y === 0)
+    val circuloTrasladado :Figura = motorMoveOrigen.figuras.tail.head
+    assert(circuloTrasladado.x === 0)
+    assert(circuloTrasladado.y === 0)
+    assert(motorMoveOrigen.getFiguras.size === 2)
+  }
+
+  "Un Motor" should "aplicar la transformación de escalar a sus figuras" in {
+    val circulo = Circulo(1,1,50)
+    val rectangulo = Rectangulo(5,5,2,2)
+    val motor : Motor = Motor.agregarFigura(circulo)
+    val otroMotor : Motor = motor.agregarFigura(rectangulo)
+    val motorDuplicado : Motor = otroMotor.transformar(otroMotor.duplicar)
+    val rectanguloDuplicado :Rectangulo = motorDuplicado.figuras.head.asInstanceOf[Rectangulo]
+    assert(rectanguloDuplicado.alto === 4)
+    assert(rectanguloDuplicado.ancho === 4)
+    val circuloDuplicado :Circulo = motorDuplicado.figuras.tail.head.asInstanceOf[Circulo]
+    assert(circuloDuplicado.radio === 100)
+    assert(motorDuplicado.getFiguras.size === 2)
+  }
+
 
   "Un Motor" should "devolver el estado anterior" in {
     val circulo = Circulo(1,1,50)
@@ -85,6 +109,28 @@ class MotorTest extends FlatSpec{
     assert(motorRollback.motorAnterior === None)
   }
 
+  "Un Motor" should "poderse rollbackear luego de una transformación que mueva la pos al origen" in {
+    val rectangulo = Rectangulo(5,5,2,2)
+    val circulo = Circulo(1,1,25)
+    val motor : Motor = Motor.agregarFigura(rectangulo)
+    val otroMotor : Motor = motor.agregarFigura(circulo)
+    val motorMoveOrigen : Motor = otroMotor.transformar(otroMotor.moverOrigen)
+    val rectanguloOrigen :Figura = motorMoveOrigen.figuras.head
+    assert(rectanguloOrigen.x === 0)
+    assert(rectanguloOrigen.y === 0)
+    val circuloOrigen :Figura = motorMoveOrigen.figuras.tail.head
+    assert(circuloOrigen.x === 0)
+    assert(circuloOrigen.y === 0)
+    assert(motorMoveOrigen.getFiguras.size === 2)
+    val motorRollback : Motor = motorMoveOrigen.rollback()
+    assert(motorRollback.getFiguras.size === 2)
+    val circuloRollback :Figura = motorRollback.figuras.head
+    assert(circuloRollback.x === 1)
+    assert(circuloRollback.y === 1)
+    val rectanguloRollback :Figura = motorRollback.figuras.tail.head
+    assert(rectanguloRollback.x === 5)
+    assert(rectanguloRollback.y === 5)
+  }
 
   "Un Motor" should "poderse rollbackear una vez" in {
     val rectangulo = Rectangulo(5,5,2,2)
