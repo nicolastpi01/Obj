@@ -117,14 +117,15 @@ case class Motor() {
     figurasRet
   }
 
-  // Si n excede la cant. de estados del motor entonces retorna el último estado definido
   // Si n es negativo, 1 o 0 el efecto es el mismo
   def rollback(n : Int = 0) : Motor = {
-    if(motorAnterior.isEmpty) throw new NoRollbackException("no se puede rollbackear si no hay un motor previo")
+    if(motorAnterior.isEmpty) throw NoRollbackException("no se puede rollbackear si no hay un motor previo")
     var motorAnt : Option[Motor] = motorAnterior
     for (i <- 2 to n) {
       if(motorAnt.get.motorAnterior.isDefined)
         motorAnt = motorAnt.get.motorAnterior
+      else
+        throw NoRollbackException("no se puede rollbackear si no hay un motor previo")
     }
     motorAnt.get
   }

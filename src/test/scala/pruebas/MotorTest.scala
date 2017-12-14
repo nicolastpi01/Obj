@@ -121,4 +121,9 @@ class MotorTest extends FlatSpec{
     assertThrows[NoRollbackException](Motor.rollback(1))
   }
 
+  "Un Motor" should "no deberia poder rollbackearse tres veces,(no hay tantos estados)" in {
+    val rectangulo = Rectangulo(5,5,2,2)
+    assertThrows[NoRollbackException](Motor.rollback(3)) // No hay estados ni para un rollback
+  }
+
 }
