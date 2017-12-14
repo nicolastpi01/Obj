@@ -37,14 +37,14 @@ class MotorTest extends FlatSpec{
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
     val otroMotor : Motor = motor.agregarFigura(rectangulo)
-    val otroMotorMas : Motor = otroMotor.transformar(otroMotor.trasladar(2,2))
+    val otroMotorMas : Motor = otroMotor.transformar(otroMotor.mover(2,2))
     print(otroMotor.figuras)
     val rectanguloTrasladado :Rectangulo = otroMotor.figuras.head.asInstanceOf[Rectangulo]
-    //assert(rectanguloTrasladado.x === 7)
-    //assert(rectanguloTrasladado.y === 7)
-    val circuloTrasladado = otroMotor.getFiguras.tail.head.asInstanceOf[Circulo]
-    assert(circuloTrasladado.x === 3)
-    assert(circuloTrasladado.y === 3)
+    assert(rectanguloTrasladado.x === 2)
+    assert(rectanguloTrasladado.y === 2)
+    //val circuloTrasladado = otroMotor.getFiguras.tail.head.asInstanceOf[Circulo]
+    //assert(circuloTrasladado.x === 3)
+    //assert(circuloTrasladado.y === 3)
     //assert(motor.getFiguras.size === 1)
     //assert(otroMotor.getFiguras.size === 2)
     //assert(otroMotorMas.getFiguras.size === 2)
