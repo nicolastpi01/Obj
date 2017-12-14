@@ -119,7 +119,7 @@ case class Motor() {
   def rollback(n : Int) : Motor = {
     if(motorAnterior.isEmpty) throw new IllegalArgumentException("arg 1 was wrong...")
     var motorAnt : Option[Motor] = motorAnterior
-    for (i <- 1 to n) {
+    for (i <- 2 to n) {
       if(motorAnt.get.motorAnterior.isDefined)
         motorAnt = motorAnt.get.motorAnterior
     }
