@@ -2,7 +2,6 @@ package dominio
 
 import exceptions.NoRollbackException
 
-
 trait Figura {
   def x:Int
   def y:Int

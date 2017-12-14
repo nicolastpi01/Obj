@@ -30,24 +30,24 @@ class MotorTest extends FlatSpec{
 
   }
 
-  // No funciona !!!!!!!!!!!!!
   /*
+  // No funciona !!!!!!!!!!!!!
   "Un Motor" should "aplicar la transformación de trasladar a sus figuras" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
     val otroMotor : Motor = motor.agregarFigura(rectangulo)
     val otroMotorMas : Motor = otroMotor.transformar(otroMotor.trasladar(2,2))
-
-    val rectanguloTrasladado = otroMotor.getFiguras.head
-    assert(rectanguloTrasladado.x === 7)
-    assert(rectanguloTrasladado.y === 7)
-    val circuloTrasladado = otroMotor.getFiguras.tail.head
+    print(otroMotor.figuras)
+    val rectanguloTrasladado :Rectangulo = otroMotor.figuras.head.asInstanceOf[Rectangulo]
+    //assert(rectanguloTrasladado.x === 7)
+    //assert(rectanguloTrasladado.y === 7)
+    val circuloTrasladado = otroMotor.getFiguras.tail.head.asInstanceOf[Circulo]
     assert(circuloTrasladado.x === 3)
     assert(circuloTrasladado.y === 3)
-    assert(motor.getFiguras.size === 1)
-    assert(otroMotor.getFiguras.size === 2)
-    assert(otroMotorMas.getFiguras.size === 2)
+    //assert(motor.getFiguras.size === 1)
+    //assert(otroMotor.getFiguras.size === 2)
+    //assert(otroMotorMas.getFiguras.size === 2)
 
   }
   */
