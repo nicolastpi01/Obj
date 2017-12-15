@@ -36,7 +36,7 @@ class MotorTest extends FlatSpec{
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
     val otroMotor : Motor = motor.agregarFigura(rectangulo)
-    val otroMotorMas : Motor = otroMotor.transformar(otroMotor.trasladar(2,2)(_:Figura))
+    val otroMotorMas : Motor = otroMotor.transformar(Transform.trasladar(2,2)(_:Figura))
     val rectanguloTrasladado :Rectangulo = otroMotorMas.figuras.head.asInstanceOf[Rectangulo]
     assert(rectanguloTrasladado.x === 7)
     assert(rectanguloTrasladado.y === 7)
@@ -49,7 +49,7 @@ class MotorTest extends FlatSpec{
   "Un Motor" should "repetir la última transformación realizada, en este caso trasladar" in {
     val circulo = Circulo(1,1,50)
     val motor : Motor = Motor.agregarFigura(circulo)
-    val motorTrasladado : Motor = motor.transformar(motor.trasladar(2,2))
+    val motorTrasladado : Motor = motor.transformar(Transform.trasladar(2,2))
     val circuloPos3x3 :Circulo = motorTrasladado.figuras.head.asInstanceOf[Circulo]
     assert(circuloPos3x3.x === 3)
     assert(circuloPos3x3.y === 3)
@@ -65,12 +65,13 @@ class MotorTest extends FlatSpec{
     assertThrows[ThereAreNoPreviousTransformationsException](motor.repetir) // No hay transformaciones previas
   }
 
+
   "Un Motor" should "aplicar la transformación de mover origen a sus figuras" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
     val otroMotor : Motor = motor.agregarFigura(rectangulo)
-    val motorMoveOrigen : Motor = otroMotor.transformar(otroMotor.moverOrigen)
+    val motorMoveOrigen : Motor = otroMotor.transformar(Transform.moverOrigen)
     val rectanguloTrasladado :Figura = motorMoveOrigen.figuras.head
     assert(rectanguloTrasladado.x === 0)
     assert(rectanguloTrasladado.y === 0)
@@ -85,7 +86,7 @@ class MotorTest extends FlatSpec{
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
     val otroMotor : Motor = motor.agregarFigura(rectangulo)
-    val motorDuplicado : Motor = otroMotor.transformar(otroMotor.duplicar)
+    val motorDuplicado : Motor = otroMotor.transformar(Transform.duplicar)
     val rectanguloDuplicado :Rectangulo = motorDuplicado.figuras.head.asInstanceOf[Rectangulo]
     assert(rectanguloDuplicado.alto === 4)
     assert(rectanguloDuplicado.ancho === 4)
@@ -93,7 +94,6 @@ class MotorTest extends FlatSpec{
     assert(circuloDuplicado.radio === 100)
     assert(motorDuplicado.getFiguras.size === 2)
   }
-
 
   "Un Motor" should "devolver el estado anterior" in {
     val circulo = Circulo(1,1,50)
@@ -105,8 +105,8 @@ class MotorTest extends FlatSpec{
     val nuevoEstadoAnterior : List[Figura] = otroMotor.getEstadoAnterior
     assert(nuevoEstadoAnterior.size === 1)
     assert(nuevoEstadoAnterior.head === circulo)
-
   }
+
 
   "Un Motor" should "devolver todos los estados" in {
     val circulo = Circulo(1,1,50)
@@ -117,7 +117,6 @@ class MotorTest extends FlatSpec{
     assert(estados.size === 2)
     assert(estados.head.head === circulo)
     assert(estados.tail.head.head === rectangulo)
-
   }
 
   "Un Motor" should "poderse rollbackear" in {
@@ -133,7 +132,7 @@ class MotorTest extends FlatSpec{
     val circulo = Circulo(1,1,25)
     val motor : Motor = Motor.agregarFigura(rectangulo)
     val otroMotor : Motor = motor.agregarFigura(circulo)
-    val motorMoveOrigen : Motor = otroMotor.transformar(otroMotor.moverOrigen)
+    val motorMoveOrigen : Motor = otroMotor.transformar(Transform.moverOrigen)
     val rectanguloOrigen :Figura = motorMoveOrigen.figuras.head
     assert(rectanguloOrigen.x === 0)
     assert(rectanguloOrigen.y === 0)
@@ -180,7 +179,6 @@ class MotorTest extends FlatSpec{
     assert(motorRollback.figuras.head === rectangulo)
   }
 
-
   "Un Motor" should "no deberia poder rollbackearse si no tiene un estado anterior" in {
     val rectangulo = Rectangulo(5,5,2,2)
     assertThrows[NoRollbackException](Motor.rollback(1))
@@ -190,5 +188,6 @@ class MotorTest extends FlatSpec{
     val rectangulo = Rectangulo(5,5,2,2)
     assertThrows[NoRollbackException](Motor.rollback(3)) // No hay estados ni para un rollback
   }
+
 
 }

@@ -7,16 +7,17 @@ class FuncionesUtilesTest extends FlatSpec {
 
   "Un Motor" should "moverOrigen un circulo" in {
 
-    val moverOrigen = Motor.moverOrigen[Circulo]_
+    val moverOrigen = Transform.moverOrigen[Circulo]_
     val circulo :Circulo = moverOrigen(Circulo(1,1,50))
 
     assert(circulo.x === 0)
     assert(circulo.y === 0)
   }
 
+
   "Un Motor" should "moverX un circulo" in {
 
-    val moverXfunction = Motor.moverX[Circulo](5)_
+    val moverXfunction = Transform.moverX[Circulo](5)_
     val circulo :Circulo = moverXfunction(Circulo(1,1,50))
 
     assert(circulo.x === 5)
@@ -25,16 +26,17 @@ class FuncionesUtilesTest extends FlatSpec {
 
   "Un Motor" should "moverY un rectangulo" in {
 
-    val moverYfunction = Motor.moverY[Rectangulo](3)_
+    val moverYfunction = Transform.moverY[Rectangulo](3)_
     val rectangulo :Rectangulo = moverYfunction(Rectangulo(1,10,4,6))
 
     assert(rectangulo.x === 1)
     assert(rectangulo.y === 3)
   }
 
+
   "Un Motor" should "trasladarXeY un rectangulo" in {
 
-    val function = Motor.trasladarXeY[Rectangulo](2)_
+    val function = Transform.trasladarXeY[Rectangulo](2)_
     val rectangulo :Rectangulo = function(Rectangulo(1,1,4,6))
 
     assert(rectangulo.x === 3)
@@ -43,7 +45,7 @@ class FuncionesUtilesTest extends FlatSpec {
 
   "Un Motor" should "trasladarXeY una linea" in {
 
-    val function = Motor.trasladarXeY[Linea](2)_
+    val function = Transform.trasladarXeY[Linea](2)_
     val linea :Linea = function(Linea(1,1,0,6))
 
     assert(linea.x === 3)
@@ -52,7 +54,7 @@ class FuncionesUtilesTest extends FlatSpec {
 
   "Un Motor" should "duplicar un circulo" in {
 
-    val function = Motor.duplicar[Circulo]_
+    val function = Transform.duplicar[Circulo]_
     val circulo :Circulo = function(Circulo(0,0,25))
 
     assert(circulo.radio === 50)
@@ -60,7 +62,7 @@ class FuncionesUtilesTest extends FlatSpec {
 
   "Un Motor" should "cuadruplicar un rectangulo" in {
 
-    val function = Motor.cuadruplicar[Rectangulo]_
+    val function = Transform.cuadruplicar[Rectangulo]_
     val rectangulo :Rectangulo = function(Rectangulo(1,1,2,2))
 
     assert(rectangulo.alto === 8)
