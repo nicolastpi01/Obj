@@ -8,11 +8,13 @@ class TransformacionesTest extends FlatSpec{
 
   "Un Motor" should "trasladar un Circulo" in {
     val trasladar = Transform.trasladar[Circulo](2,-1)_
-    val circulo: Circulo = trasladar(Circulo(1,1,43))
+    val circulo : Circulo = Circulo(1,1,43)
+    val circuloNuevo: Circulo = trasladar(circulo)
 
-    assert(circulo.x === 3)
-    assert(circulo.y === 0)
-    assert(circulo.radio === 43)
+    assert(circuloNuevo.x === 3)
+    assert(circuloNuevo.y === 0)
+    assert(circuloNuevo.radio === 43)
+    assert(circulo !== circuloNuevo)
   }
 
   "Un Motor" should "trasladar una linea" in {
