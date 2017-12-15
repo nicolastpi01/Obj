@@ -1,6 +1,6 @@
 package dominio
 
-import exceptions.NoRollbackException
+import exceptions.{NoRollbackException, ThereAreNoPreviousTransformationsException}
 
 trait Figura {
   def x:Int
@@ -21,8 +21,11 @@ object Motor extends Motor
 case class Motor() {
   var motorAnterior :Option[Motor] = None
 
+  var funcionTransformacionAnterior : Option[Figura=>Figura] = None
 
   var figuras: List[Figura] = List()
+
+  /// METODOS DE TRANSFORMACIÓN DE FIGURAS
 
   def trasladar[T <: Figura](x: Int, y: Int) (figura: T) :T = {
     val result = figura match {
@@ -96,6 +99,7 @@ case class Motor() {
     val figurasTransformadas : List[Figura] = transformarFiguras(f, this.figuras)
     val motor : Motor = create
     motor.figuras = figurasTransformadas
+    motor.funcionTransformacionAnterior = Some(f)
     motor
   }
 
@@ -131,9 +135,12 @@ case class Motor() {
     motorAnt.get
   }
 
-
-
-
+  def repetir : Motor = {
+    funcionTransformacionAnterior match {
+      case Some(funcionTransformacion) => transformar(funcionTransformacion)
+      case None => throw ThereAreNoPreviousTransformationsException("no hay funciones de transformacion previas")
+    }
+  }
 
 }
 

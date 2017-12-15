@@ -2,7 +2,7 @@
 package dominio
 package pruebas
 
-import exceptions.NoRollbackException
+import exceptions.{NoRollbackException, ThereAreNoPreviousTransformationsException}
 import org.scalatest.FlatSpec
 
 class MotorTest extends FlatSpec{
@@ -44,6 +44,25 @@ class MotorTest extends FlatSpec{
     assert(circuloTrasladado.x === 3)
     assert(circuloTrasladado.y === 3)
     assert(otroMotorMas.getFiguras.size === 2)
+  }
+
+  "Un Motor" should "repetir la última transformación realizada, en este caso trasladar" in {
+    val circulo = Circulo(1,1,50)
+    val motor : Motor = Motor.agregarFigura(circulo)
+    val motorTrasladado : Motor = motor.transformar(motor.trasladar(2,2))
+    val circuloPos3x3 :Circulo = motorTrasladado.figuras.head.asInstanceOf[Circulo]
+    assert(circuloPos3x3.x === 3)
+    assert(circuloPos3x3.y === 3)
+    val motorRepetirTraslado : Motor = motorTrasladado.repetir
+    val circuloPos5x5 :Circulo = motorRepetirTraslado.figuras.head.asInstanceOf[Circulo]
+    assert(circuloPos5x5.x === 5)
+    assert(circuloPos5x5.y === 5)
+  }
+
+  "Un Motor" should "deberia tirar error si intenta repetir una transformación que nunca se realizo" in {
+    val circulo = Circulo(1,1,50)
+    val motor : Motor = Motor.agregarFigura(circulo)
+    assertThrows[ThereAreNoPreviousTransformationsException](motor.repetir) // No hay transformaciones previas
   }
 
   "Un Motor" should "aplicar la transformación de mover origen a sus figuras" in {
