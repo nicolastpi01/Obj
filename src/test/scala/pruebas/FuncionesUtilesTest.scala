@@ -5,7 +5,7 @@ import org.scalatest.FlatSpec
 
 class FuncionesUtilesTest extends FlatSpec {
 
-  "Un Motor" should "moverOrigen un circulo" in {
+  "A Transform object" should "moverOrigen a circle" in {
 
     val moverOrigen = Transform.moverOrigen[Circulo]_
     val circulo :Circulo = moverOrigen(Circulo(1,1,50))
@@ -15,7 +15,7 @@ class FuncionesUtilesTest extends FlatSpec {
   }
 
 
-  "Un Motor" should "moverX un circulo" in {
+  "A Transform object" should "moverX a circle (move an x number of times)" in {
 
     val moverXfunction = Transform.moverX[Circulo](5)_
     val circulo :Circulo = moverXfunction(Circulo(1,1,50))
@@ -24,7 +24,7 @@ class FuncionesUtilesTest extends FlatSpec {
     assert(circulo.y === 1)
   }
 
-  "Un Motor" should "moverY un rectangulo" in {
+  "A Transform object" should "moverY a rectangle (move the y position of a figure)" in {
 
     val moverYfunction = Transform.moverY[Rectangulo](3)_
     val rectangulo :Rectangulo = moverYfunction(Rectangulo(1,10,4,6))
@@ -34,7 +34,7 @@ class FuncionesUtilesTest extends FlatSpec {
   }
 
 
-  "Un Motor" should "trasladarXeY un rectangulo" in {
+  "A Transform object" should "trasladarXeY a rectangle (traslada to x&y position)" in {
 
     val function = Transform.trasladarXeY[Rectangulo](2)_
     val rectangulo :Rectangulo = function(Rectangulo(1,1,4,6))
@@ -43,7 +43,7 @@ class FuncionesUtilesTest extends FlatSpec {
     assert(rectangulo.y === 3)
   }
 
-  "Un Motor" should "trasladarXeY una linea" in {
+  "A Transform object" should "trasladarXeY a line" in {
 
     val function = Transform.trasladarXeY[Linea](2)_
     val linea :Linea = function(Linea(1,1,0,6))
@@ -52,7 +52,7 @@ class FuncionesUtilesTest extends FlatSpec {
     assert(linea.y === 3)
   }
 
-  "Un Motor" should "duplicar un circulo" in {
+  "A Transform object" should "duplicate a circle" in {
 
     val function = Transform.duplicar[Circulo]_
     val circulo :Circulo = function(Circulo(0,0,25))
@@ -60,7 +60,7 @@ class FuncionesUtilesTest extends FlatSpec {
     assert(circulo.radio === 50)
   }
 
-  "Un Motor" should "cuadruplicar un rectangulo" in {
+  "A Transform object" should "quadruple a rectangle" in {
 
     val function = Transform.cuadruplicar[Rectangulo]_
     val rectangulo :Rectangulo = function(Rectangulo(1,1,2,2))
