@@ -6,9 +6,9 @@ object Transform {
 
   def trasladar[T <: Figura](x: Int, y: Int) (figura: T) :T = {
     val result = figura match {
-      case Circulo(xPos, yPos, radio) => Circulo(xPos+x, yPos+y, radio)
-      case Rectangulo(xPos, yPos, ancho, alto) => Rectangulo(xPos+x, yPos+y, ancho, alto)
-      case Linea(xPos, yPos, otroX, otroY) => Linea(xPos+x, yPos+y, otroX, otroY)
+      case c @ Circulo(xPos, yPos, _) => c.copy(xPos+x, yPos+y)
+      case r @ Rectangulo(xPos, yPos, _, _) => r.copy(xPos+x, yPos+y)
+      case l @ Linea(xPos, yPos, _, _) => l.copy(xPos+x, yPos+y)
     }
     result.asInstanceOf[T]
   }
@@ -16,21 +16,24 @@ object Transform {
 
   def mover[T <: Figura](x: Int, y: Int) (figura: T): T = {
     val result = figura match {
-      case Circulo(xPos, yPos, radio) => Circulo(x, y, radio)
-      case Rectangulo(xPos, yPos, ancho, alto) => Rectangulo(x, y, ancho, alto)
-      case Linea(xPos, yPos, otroX, otroY) => Linea(x, y, otroX, otroY)
+      case c : Circulo => c.copy(x,y)
+      case r : Rectangulo => r.copy(x,y)
+      case l : Linea => l.copy(x,y)
     }
     result.asInstanceOf[T]
   }
 
+
   def escalar[T <: Figura] (n: Double) (figura: T) : T = {
     val result = figura match {
-      case Circulo(xPos, yPos, radio) => Circulo(xPos, yPos, n*radio)
-      case Rectangulo(xPos, yPos, ancho, alto) => Rectangulo(xPos, yPos, ancho*n, alto*n)
-      case Linea(xPos, yPos, otroX, otroY) => Linea(xPos, yPos, otroX*n, otroY*n)
+      case c @ Circulo(_, _, radio) => c.copy(radio = n*radio)
+      case r @ Rectangulo(_, _, ancho, alto) => r.copy(ancho = ancho*n, alto = alto*n)
+      case l @ Linea(_, _, otroX, otroY) => l.copy(otroX = otroX*n, otroY = otroY*n)
     }
     result.asInstanceOf[T]
   }
+
+                    /// TRANFORMACIONES ÚTILES
 
   def moverX[T <: Figura](x :Int) (figura: T) :T = mover(x, figura.y) (figura)
 
