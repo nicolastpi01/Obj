@@ -7,7 +7,7 @@ import org.scalatest.FlatSpec
 
 class MotorTest extends FlatSpec{
 
-  "Un Motor" should "agregar figuras" in {
+  "A Motor" should "add a figure" in {
     assert(Motor.motorAnterior === None)
     val motor : Motor = Motor.agregarFigura(Circulo(1,1,50))
     assert(Motor.figuras.size === 0)
@@ -15,7 +15,7 @@ class MotorTest extends FlatSpec{
     assert(motor.motorAnterior === Some(Motor))
   }
 
-  "Un Motor" should "retornar sus figuras" in {
+  "A Motor" should "return their figures" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
@@ -31,7 +31,7 @@ class MotorTest extends FlatSpec{
   }
 
 
-  "Un Motor" should "aplicar la transformación de trasladar a sus figuras" in {
+  "A Motor" should "apply the transformation of trasladar over your figures" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
@@ -46,7 +46,7 @@ class MotorTest extends FlatSpec{
     assert(otroMotorMas.getFiguras.size === 2)
   }
 
-  "Un Motor" should "repetir la última transformación realizada, en este caso trasladar" in {
+  "A Motor" should "repeat the last function performed, in this case trasladar" in {
     val circulo = Circulo(1,1,50)
     val motor : Motor = Motor.agregarFigura(circulo)
     val motorTrasladado : Motor = motor.transformar(Transform.trasladar(2,2))
@@ -59,14 +59,14 @@ class MotorTest extends FlatSpec{
     assert(circuloPos5x5.y === 5)
   }
 
-  "Un Motor" should "deberia tirar error si intenta repetir una transformación que nunca se realizo" in {
+  "A Motor" should "thrown an error if it were to repeat a transformation that never took place" in {
     val circulo = Circulo(1,1,50)
     val motor : Motor = Motor.agregarFigura(circulo)
     assertThrows[ThereAreNoPreviousTransformationsException](motor.repetir) // No hay transformaciones previas
   }
 
 
-  "Un Motor" should "aplicar la transformación de mover origen a sus figuras" in {
+  "A Motor" should "apply the transformation of moverOrigen to their figures" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
@@ -81,7 +81,7 @@ class MotorTest extends FlatSpec{
     assert(motorMoveOrigen.getFiguras.size === 2)
   }
 
-  "Un Motor" should "aplicar la transformación de escalar a sus figuras" in {
+  "A Motor" should "apply the transformation of escalar to their figures" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
@@ -95,7 +95,7 @@ class MotorTest extends FlatSpec{
     assert(motorDuplicado.getFiguras.size === 2)
   }
 
-  "Un Motor" should "devolver el estado anterior" in {
+  "A Motor" should "return the previous state" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
@@ -108,7 +108,7 @@ class MotorTest extends FlatSpec{
   }
 
 
-  "Un Motor" should "devolver todos los estados" in {
+  "A Motor" should "return all the states" in {
     val circulo = Circulo(1,1,50)
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(circulo)
@@ -119,7 +119,7 @@ class MotorTest extends FlatSpec{
     assert(estados.tail.head.head === rectangulo)
   }
 
-  "Un Motor" should "poderse rollbackear" in {
+  "A Motor" should "be able to rollback" in {
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(rectangulo)
     val motorRollback : Motor = motor.rollback()
@@ -127,7 +127,7 @@ class MotorTest extends FlatSpec{
     assert(motorRollback.motorAnterior === None)
   }
 
-  "Un Motor" should "poderse rollbackear luego de una transformación que mueva la pos al origen" in {
+  "A Motor" should "be able to rollback after a transformation that moves the figure to the origen" in {
     val rectangulo = Rectangulo(5,5,2,2)
     val circulo = Circulo(1,1,25)
     val motor : Motor = Motor.agregarFigura(rectangulo)
@@ -150,7 +150,7 @@ class MotorTest extends FlatSpec{
     assert(rectanguloRollback.y === 5)
   }
 
-  "Un Motor" should "poderse rollbackear una vez" in {
+  "A Motor" should "be able to rollback once" in {
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(rectangulo)
     val motorRollback : Motor = motor.rollback(1)
@@ -158,7 +158,7 @@ class MotorTest extends FlatSpec{
     assert(motorRollback.motorAnterior === None)
   }
 
-  "Un Motor" should "poderse rollbackear dos veces" in {
+  "A Motor" should "be able to rollback twice" in {
     val rectangulo = Rectangulo(5,5,2,2)
     val circulo = Circulo(1,1,50)
     val motor : Motor = Motor.agregarFigura(rectangulo)
@@ -168,7 +168,7 @@ class MotorTest extends FlatSpec{
     assert(motorRollback.motorAnterior === None)
   }
 
-  "Un Motor" should "poderse rollbackear una vez y aún tener figuras" in {
+  "A Motor" should "be able to rollback and still have figures" in {
     val rectangulo = Rectangulo(5,5,2,2)
     val circulo = Circulo(1,1,50)
     val motor : Motor = Motor.agregarFigura(rectangulo)
@@ -179,15 +179,14 @@ class MotorTest extends FlatSpec{
     assert(motorRollback.figuras.head === rectangulo)
   }
 
-  "Un Motor" should "no deberia poder rollbackearse si no tiene un estado anterior" in {
+  "A Motor" should "not be able to rollback if it does not have a previous state" in {
     val rectangulo = Rectangulo(5,5,2,2)
     assertThrows[NoRollbackException](Motor.rollback(1))
   }
 
-  "Un Motor" should "no deberia poder rollbackearse tres veces,(no hay tantos estados)" in {
+  "A Motor" should "not be able to rollback three times (there are not so many states)" in {
     val rectangulo = Rectangulo(5,5,2,2)
     assertThrows[NoRollbackException](Motor.rollback(3)) // No hay estados ni para un rollback
   }
-
 
 }
