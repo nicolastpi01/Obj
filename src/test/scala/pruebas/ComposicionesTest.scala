@@ -5,7 +5,7 @@ import org.scalatest.FlatSpec
 
 class ComposicionesTest extends FlatSpec{
 
-  "Un Motor" should "aplicar doble a una tranformación trasladar" in {
+  "A Transform object" should "apply a trasladar function twice upon a circle" in {
     val dobleTraslacion = Transform.doble[Circulo](Transform.trasladar(1,1))
     val circulo : Circulo = dobleTraslacion(Circulo(1,1,43))
 
@@ -14,7 +14,7 @@ class ComposicionesTest extends FlatSpec{
     assert(circulo.radio === 43)
   }
 
-  "Un Motor" should "aplicar doble a una tranformación escalar sobre un rectangulo" in {
+  "A Transform object" should "apply a escalar function twice upon a rectangle" in {
     val dobleEscalar = Transform.doble[Rectangulo](Transform.escalar(2))
     val rectangulo : Rectangulo = dobleEscalar(Rectangulo(1,1,10,10))
 
@@ -22,7 +22,7 @@ class ComposicionesTest extends FlatSpec{
     assert(rectangulo.alto === 40)
   }
 
-  "Un Motor" should "aplicar doble a una tranformación escalar sobre una linea" in {
+  "A Transform object" should "apply a escalar function twice upon a line" in {
     val dobleEscalar = Transform.doble[Linea](Transform.escalar(2))
     val linea : Linea = dobleEscalar(Linea(1,1,0,5))
 
