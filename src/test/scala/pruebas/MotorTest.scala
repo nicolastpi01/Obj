@@ -10,7 +10,7 @@ class MotorTest extends FlatSpec{
   "A Motor" should "add a figure" in {
     assert(Motor.motorAnterior === None)
     val motor : Motor = Motor.agregarFigura(Circulo(1,1,50))
-    assert(Motor.figuras.size === 0)
+    assert(Motor.figuras.isEmpty)
     assert(motor.figuras.size === 1)
     assert(motor.motorAnterior === Some(Motor))
   }
@@ -123,7 +123,7 @@ class MotorTest extends FlatSpec{
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(rectangulo)
     val motorRollback : Motor = motor.rollback()
-    assert(motorRollback.figuras.size === 0)
+    assert(motorRollback.figuras.isEmpty)
     assert(motorRollback.motorAnterior === None)
   }
 
@@ -154,7 +154,7 @@ class MotorTest extends FlatSpec{
     val rectangulo = Rectangulo(5,5,2,2)
     val motor : Motor = Motor.agregarFigura(rectangulo)
     val motorRollback : Motor = motor.rollback(1)
-    assert(motorRollback.figuras.size === 0)
+    assert(motorRollback.figuras.isEmpty)
     assert(motorRollback.motorAnterior === None)
   }
 
@@ -164,7 +164,7 @@ class MotorTest extends FlatSpec{
     val motor : Motor = Motor.agregarFigura(rectangulo)
     val otroMotor : Motor = motor.agregarFigura(circulo)
     val motorRollback : Motor = otroMotor.rollback(2)
-    assert(motorRollback.figuras.size === 0)
+    assert(motorRollback.figuras.isEmpty)
     assert(motorRollback.motorAnterior === None)
   }
 
